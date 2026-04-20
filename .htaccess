@@ -1,0 +1,93 @@
+# ----------------------------------------------------------------------
+# 1. Security: Disable Directory Listing
+# ----------------------------------------------------------------------
+Options -Indexes
+
+# ----------------------------------------------------------------------
+# 2. Security: Protect Sensitive Files
+# ----------------------------------------------------------------------
+# Protect environment variables
+<FilesMatch "^\.env(.*)$">
+    Require all denied
+</FilesMatch>
+
+# Protect database backups and logs
+<FilesMatch "\.(sql|log|ini|bak)$">
+    Require all denied
+</FilesMatch>
+
+# Protect .htaccess itself
+<Files ".htaccess">
+    Require all denied
+</Files>
+
+# ----------------------------------------------------------------------
+# 3. Security: HTTP Headers
+# ----------------------------------------------------------------------
+<IfModule mod_headers.c>
+    # Prevent clickjacking by restricting framing to the same origin
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevent MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Enable Cross-Site Scripting (XSS) filter
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Control Referrer information sent to other sites
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Enable Strict Transport Security (HSTS) - Uncomment below line on production if using HTTPS!
+    # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 4. Performance: Enable GZIP Compression
+# ----------------------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript text/javascript application/javascript application/json application/xml image/svg+xml font/woff2
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 5. Performance: Browser Caching
+# ----------------------------------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS & JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # Default
+    ExpiresDefault "access plus 2 days"
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 6. Routing: Clean URLs & Force HTTPS
+# ----------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # ---------------------------------------------------------
+    # Force HTTPS (Uncomment the 2 lines below for production!)
+    # ---------------------------------------------------------
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # ---------------------------------------------------------
+    # Optional: Remove .php extension from URLs
+    # ---------------------------------------------------------
+    # RewriteCond %{REQUEST_FILENAME} !-d
+    # RewriteCond %{REQUEST_FILENAME}\.php -f
+    # RewriteRule ^([^\.]+)/?$ $1.php [L]
+</IfModule>
