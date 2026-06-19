@@ -91,7 +91,7 @@ http://localhost/project-folder
 ## 👨‍💻 Author
 
 **Ansaf Ahamed**
-Undergraduate – Physics and Electronics - UOK
+*Undergraduate – Physics and Electronics - UOK*
 ---
 
 ## ⭐ Contributing
