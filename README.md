@@ -79,12 +79,6 @@ http://localhost/project-folder
 
 ---
 
-## 📸 Screenshots (Optional)
-
-*Add screenshots of your system here*
-
----
-
 ## 🚧 Future Improvements
 
 * API integration
@@ -97,8 +91,7 @@ http://localhost/project-folder
 ## 👨‍💻 Author
 
 **Ansaf Ahamed**
-Undergraduate – Electronics & Computer Science
-
+Undergraduate – Physics and Electronics - UOK
 ---
 
 ## ⭐ Contributing
